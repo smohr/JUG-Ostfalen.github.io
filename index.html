@@ -1,67 +1,44 @@
 ---
 layout: landing
 ---
+<!-- calculate offset to the last visible date -->
+{% assign event_offset= 0 %}
+{% for post in site.categories.event reversed %}
+  {% if site.time > post.date %}
+    {% assign event_offset=forloop.index %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 
-<div class="container-fluid">
+<ul class="events-box">
+    {% for post in site.categories.event reversed offset:event_offset limit:3 %}
+    <li>
+        <h3>
+            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
+                <img class="icon" src="/assets/partners/{{ site.orgs[post.organizer].image}}"/>
+                {{ post.title }}
+            </a>
+        </h3>
 
-    <div class="row overview">
-        <div class="col-md-8">
-            <ul class="post-list">
-                {% for post in site.categories.article limit:10 %}
-                <li>
-                    <h3>
-                        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                    </h3>
-                    <h5>{% include date_ger.html date=post.date %}</h5>
-                    <div>
-                        {{ post.excerpt | remove: '<p>' | remove: '</p>' }}
-                        {% if post.excerpt != post.content %}
-                        <a href="{{ post.url | prepend: site.baseurl }}">(weiterlesen...)</a>
-                        {% endif %}
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-            <h4><a href="_pages/artikel.html">alle Artikel</h4>
+     {% include event-metadata.html %}
+    </li>
+    {% endfor %}
+    <h4><a href="_pages/events.html" class="pull-right">alle Events</a></h4>
+</ul>
+<ul class="post-list">
+    {% for post in site.categories.article limit:3 %}
+    <li>
+        <h3>
+            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h3>
+        <h5>{% include date_ger.html date=post.date %}</h5>
+        <div>
+            {{ post.excerpt | remove: '<p>' | remove: '</p>' }}
+            {% if post.excerpt != post.content %}
+            <a href="{{ post.url | prepend: site.baseurl }}">(weiterlesen...)</a>
+            {% endif %}
         </div>
-        <div class="col-md-4">
-            <ul class="post-list">
-                {% for post in site.categories.event reversed %}
-                {% if site.time < post.date %}
-
-                <li>
-                    <h3>
-                        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
-                            <img class="icon" src="/assets/partners/{{ site.orgs[post.organizer].image}}"/>
-                            {{ post.title }}
-                        </a>
-                    </h3>
-
-                 {% include event-metadata.html %}
-                 {% if post.categories contains "event" and post.organizer contains "JUG" %}
-
-                 <script type="application/ld+json">
-                 {
-                   "@context": "http://schema.org",
-                   "@type": "EducationEvent",
-                   "name": "{{ post.title }}",
-                   "startDate" : "{{ post.date | date_to_xmlschema }}"{% if site.locations[post.location] %},
-                   "location" : {
-                     "@type" : "Place",
-                     "sameAs" : "{{ site.locations[post.location].url }}",
-                     "name" : "{{ site.locations[post.location].name }}",
-                     "address" : "{{ site.locations[post.location].street }}; {{ site.locations[post.location].city }}"
-                   }
-                   {% endif %}
-                 }
-                 </script>
-
-                 {% endif %}
-                </li>
-                {% endif %}
-                {% endfor %}
-                <h4><a href="_pages/events.html" class="pull-right">alle Events</a></h4>
-            </ul>
-        </div>
-
-    </div>
+    </li>
+    {% endfor %}
+</ul>
+<h4><a href="_pages/artikel.html">alle Artikel</h4>

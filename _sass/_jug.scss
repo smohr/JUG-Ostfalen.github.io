@@ -1,7 +1,128 @@
 /*
+* navbar
+*/
+nav {
+    height: 5em;
+    box-shadow:  0px 5px 10px $grey-color-light;
+    line-height: 5em;
+    margin-bottom: 2em;
+
+    .navbar-image {
+      height: 100%;
+      float: left;
+    }
+
+    .navbar-brand {
+      margin-left: 0;
+      font-size: x-large;
+
+      &:hover {
+        color: $grey-color-dark;
+      }
+    }
+
+    .navbar-menu-item {
+      font-size: large;
+    }
+
+    a {
+      color: $grey-color;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: $grey-color-dark;
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: $grey-color;
+    }
+
+    > ul {
+      float: right;
+    }
+
+    > ul > li {
+      	float: left;
+        margin-left: 2em;
+    }
+
+    > ul > li:last-child {
+      margin-right: 1em;
+    }
+
+    > ul > li > a {
+    	  cursor: pointer;
+    	  display: block;
+      	outline: none;
+      	width: 100%;
+    }
+
+    @include media-query($menu-break-width) {
+      > ul > li {
+        display: none;
+      }
+    }
+
+    [type="checkbox"], label {
+	     display: none;
+    }
+@include media-query($menu-break-width) {
+  label {
+  		display: block;
+		  width: 40px;
+  		height: 40px;
+  		cursor: pointer;
+		  position: absolute;
+		  right: 20px;
+      top: 1em;
+	}
+
+label:after{
+  content:'';
+  display: block;
+  width: 30px;
+  height: 5px;
+  background: $grey-color;
+  margin: 7px 5px;
+  box-shadow: 0px 10px 0px $grey-color, 0px 20px 0px $grey-color;
+}
+
+	.navbar-right a {
+		  color: $grey-color;
+	}
+
+	[type="checkbox"]:checked ~ ul {
+    z-index: 9999;
+    position: absolute;
+    right: 20px;
+    left: 20px;
+    &> li {
+		  display: block;
+  		float: none;
+  		text-align: left;
+  		background: $grey-color-dark;
+		  text-indent: 20px;
+      &> a {
+        color: $grey-color-light;
+      }
+	   }
+  }
+
+	ul > li {
+  		margin-left: 0px;
+	}
+
+  ul > li:last-child {
+    margin-right: inherit;
+  }
+}
+}
+
+/*
 * pages
 */
-
 .page-title {
   font-size: 36px;
   letter-spacing: -1px;
@@ -9,10 +130,33 @@
 }
 
 /*
-events
+events on start page
 */
+
+.events-box {
+  // width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+}
+
+.events-box li {
+  display: inline-block;
+  width: 250px;
+  border: 1px solid black;
+}
+
+@include media-query($menu-break-width) {
+  .events-box li {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .event-meta {
-  overflow: auto;
+  // overflow: auto;
 }
 
 .post-list img.icon {
@@ -29,20 +173,6 @@ img.speaker {
 
 img.speaker.right {
   float: right;
-}
-
-.navbar-image {
-  height: 48px;
-  float: left;
-}
-
-#brand.navbar-brand {
-  margin-left: 0;
-  font-size: x-large;
-}
-
-.navbar-menu-item {
-  font-size: large;
 }
 
 .overview h3 {
