@@ -14,10 +14,11 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-    font-weight: 300;
+    font-weight: 400;
+    font-size  : $base-font-size;
+    font-family: $base-font-family;
+    line-height: $base-line-height;
 }
-
-
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
@@ -80,6 +81,7 @@ li {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-weight: 300;
 }
 
